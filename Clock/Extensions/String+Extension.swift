@@ -24,7 +24,12 @@ extension String {
     
     func timezone(_ date: Date) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "h:mm a"
+        guard let formatter =  DateFormatter.dateFormat(fromTemplate: "j", options: 0, locale: Locale.current) else {return ""}
+        if formatter.contains("a") {
+            dateFormatter.dateFormat = "h:mm a"
+        } else {
+            dateFormatter.dateFormat = "HH:mm"
+        }
         dateFormatter.timeZone = TimeZone(identifier: self)
         return dateFormatter.string(from: date)
     }
